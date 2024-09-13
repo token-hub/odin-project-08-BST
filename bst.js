@@ -84,16 +84,45 @@ class Tree {
 
     find(value) {
         // function that returns the node with the given value.
+        /**
+         * traverse the tree starting at the root node and stop when leap node is reach
+         *      if currentNode.value != value
+         *          if value is < value of the current node
+         *               move to the left side of current node
+         *          else
+         *              move to the right of the current node
+         */
     }
 
     levelOrder(callback) {
         // throw error when no callback is given
-        // evelOrder should traverse the tree in breadth-first level order and call the callback on each node as it traverses, passing the whole node as an argument,
+        // levelOrder should traverse the tree in breadth-first level order and call the callback on each node as it traverses, passing the whole node as an argument,
+        /**
+         * const queue = [this.root];
+         *
+         * traverse the tree starting at the node
+         *
+         *  while (queue.length)
+         *      node = queue.unshift()
+         *      callback(node) // this shouldn't be any type of async func
+         *      queue.push(node.left, node.right)
+         *
+         */
     }
 
     height(node) {
         // function that returns the given node’s height.
         // Height is defined as the number of edges in the longest path from a given node to a leaf node.
+        /**
+         * traverse the starting from the given node.
+         * calculate the left side of the given node
+         * calculate the right side of the given node
+         *
+         * then return which ever the height. if both is null then return just 1
+         *
+         * if (!node) return 0
+         * return Math.max(this.height(node.left), this.height(node.right)) + 1
+         */
     }
 
     depth(node) {
