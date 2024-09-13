@@ -3,15 +3,46 @@ const Node = require("./node");
 class Tree {
     constructor(arr) {
         this.arr = arr;
-        this.root = null;
+        // this.root = this.buildArray(arr);
     }
 
     buildArray(arr) {
         /**
          * remove duplicates then sort the given array
          *
-         * return the root node
+         * find the middle part of the array 2
+         *     middleIndex = Math.floor(arr.length / 2)
+         * call the build array again but with left half [1]
+         * call the build array again and pass the right half [3]
+         *
+         * if (!arr || !arr.length) null;
+         *
+         * midlle = arr[middleIndex];
+         * leftHalf = arr.slice(0, middleIndex);
+         * rightHalf = arr.slice(middleIndex);
+         *
+         * const node = new Node(middlePart);
+         * node.left = this.buildArray(leftHalf)
+         * node.right = this.buildArray(rightHalf)
+         *
+         * return node
          */
+
+        if (!arr || !arr.length) return null;
+        if (arr.length < 2) return new Node(arr[0]);
+
+        // this is not like the mergeSort that the middle part is included either from the left/right side.
+        // the middle part here should not be part of either the side.
+        const middleIndex = Math.floor(arr.length / 2);
+        const middle = arr[middleIndex];
+        const leftHalf = arr.slice(0, middleIndex);
+        const rightHalf = arr.slice(middleIndex + 1);
+
+        const node = new Node(middle);
+        node.left = this.buildArray(leftHalf);
+        node.right = this.buildArray(rightHalf);
+
+        return node;
     }
 
     insert(value) {
@@ -128,14 +159,29 @@ class Tree {
     depth(node) {
         // function that returns the given node’s depth.
         //Depth is defined as the number of edges in the path from a given node to the tree’s root node.
+        /**
+         * starting from the root. (this.root)
+         * count the level until you reach the target node.
+         */
     }
 
     isBalances() {
         // A balanced tree is one where the difference between heights of the left subtree and the right subtree of every node is not more than 1
+        /**
+         * const biggest = Math.max(this.height(this.root.left), this.heigh(this.root.right));
+         * const smallest = Math.min(this.height(this.root.left), this.heigh(this.root.right));
+         *
+         * return biggest - smallest < 2;
+         */
     }
 
     rebalance() {
         // function that rebalances an unbalanced tree. Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
+        /**
+         * get all the value and insert it in an array.
+         *
+         * then call the buildTree method.
+         */
     }
 }
 
