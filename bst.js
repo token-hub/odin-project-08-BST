@@ -1,4 +1,5 @@
 const Node = require("./node");
+const mergeSort = require("./mergeSort");
 
 class Tree {
     constructor(arr) {
@@ -7,6 +8,7 @@ class Tree {
     }
 
     buildArray(arr) {
+        const sortedArr = mergeSort(arr);
         /**
          * remove duplicates then sort the given array
          *
