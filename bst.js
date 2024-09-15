@@ -50,8 +50,10 @@ class Tree {
 
         while (currentNode.left || currentNode.right) {
             if (value < currentNode.data) {
+                if (!currentNode.left) break;
                 currentNode = currentNode.left;
             } else {
+                if (!currentNode.right) break;
                 currentNode = currentNode.right;
             }
         }
@@ -82,6 +84,9 @@ class Tree {
         const parentNode = currentNode;
         const targetNodeIdentifier = parentNode.left.data == value ? "left" : "right";
         const targetNode = parentNode[targetNodeIdentifier];
+
+        // it means the node is not yet in the tree
+        if (!targetNode) return;
 
         // is targetNode is a leap node ??
         if (this.height(targetNode) == 1) {
