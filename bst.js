@@ -71,7 +71,7 @@ class Tree {
 
         let currentNode = this.root;
 
-        while (currentNode.left.data || currentNode.right.data) {
+        while ((!!currentNode.left && currentNode.left.data != value) || (!!currentNode.right && currentNode.right.data != value)) {
             if (value < currentNode.data) {
                 currentNode = currentNode.left;
             } else {
@@ -80,8 +80,15 @@ class Tree {
         }
 
         const parentNode = currentNode;
-        const targetNodeIdentifier = parentNode.left.value == value ? "left" : "right";
+        const targetNodeIdentifier = parentNode.left.data == value ? "left" : "right";
         const targetNode = parentNode[targetNodeIdentifier];
+
+        // is targetNode is a leap node ??
+        if (this.height(targetNode) == 1) {
+            parentNode[targetNodeIdentifier] = null;
+        }
+
+        return;
         /**
          * traverse the tree starting at the root node and stop when leap node is reach
          *      while currentNode.left.value != value || currentNode.right.value
@@ -170,6 +177,9 @@ class Tree {
          * if (!node) return 0
          * return Math.max(this.height(node.left), this.height(node.right)) + 1
          */
+
+        if (!node) return 0;
+        return Math.max(this.height(node.left), this.height(node.right)) + 1;
     }
 
     depth(node) {
