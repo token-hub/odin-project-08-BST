@@ -27,8 +27,9 @@ class Tree {
     }
 
     insert(value) {
+        if (!value) return console.log("Please provide a value when using insert()");
         /**
-         *  inserting a new value will also be a leap node
+         *  inserting a new value will always be a leap node
          *
          * traverse the tree starting at the root node and stop when leap node is reach
          *      if value is < value of the current node
@@ -44,6 +45,20 @@ class Tree {
          *          currentNode.right = new Node(value)
          *
          */
+        const newNode = new Node(value);
+        let currentNode = this.root;
+
+        while (currentNode.left || currentNode.right) {
+            if (value < currentNode.data) {
+                currentNode = currentNode.left;
+            } else {
+                currentNode = currentNode.right;
+            }
+        }
+
+        if (value == currentNode.data) return;
+        if (value < currentNode.data) currentNode.left = newNode;
+        else currentNode.right = newNode;
     }
 
     delete(value) {
