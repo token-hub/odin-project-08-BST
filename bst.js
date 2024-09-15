@@ -71,7 +71,7 @@ class Tree {
 
         let currentNode = this.root;
 
-        while ((!!currentNode.left && currentNode.left.data != value) || (!!currentNode.right && currentNode.right.data != value)) {
+        while (!!currentNode.left && currentNode.left.data != value && !!currentNode.right && currentNode.right.data != value) {
             if (value < currentNode.data) {
                 currentNode = currentNode.left;
             } else {
@@ -88,7 +88,14 @@ class Tree {
             parentNode[targetNodeIdentifier] = null;
         }
 
-        return;
+        // is targetNode has single child ??
+        if ((targetNode.left && !targetNode.right) || (!targetNode.left && targetNode.right)) {
+            // locate the single child either it is the left node or the right node
+            const targetNodeChildIdentifier = targetNode.left ? "left" : "right";
+            // once identified, replace the parentNode[targetNodeIdentifier] with the child of the target node
+            parentNode[targetNodeIdentifier] = targetNode[targetNodeChildIdentifier];
+        }
+
         /**
          * traverse the tree starting at the root node and stop when leap node is reach
          *      while currentNode.left.value != value || currentNode.right.value
