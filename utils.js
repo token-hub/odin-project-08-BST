@@ -1,3 +1,7 @@
+const removeDuplicates = (arr) => {
+    return arr.filter((item, index) => arr.indexOf(item) === index);
+};
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
         return;
@@ -11,4 +15,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
 
-module.exports = prettyPrint;
+module.exports = {
+    prettyPrint,
+    removeDuplicates
+};
