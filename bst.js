@@ -62,9 +62,29 @@ class Tree {
     }
 
     delete(value) {
+        if (!value) return console.log("Please provide a value when using delete()");
+
+        // if (value == this.root.data && this.depth() == 0) {
+        //      this.root = null
+        //     return
+        // }
+
+        let currentNode = this.root;
+
+        while (currentNode.left.data || currentNode.right.data) {
+            if (value < currentNode.data) {
+                currentNode = currentNode.left;
+            } else {
+                currentNode = currentNode.right;
+            }
+        }
+
+        const parentNode = currentNode;
+        const targetNodeIdentifier = parentNode.left.value == value ? "left" : "right";
+        const targetNode = parentNode[targetNodeIdentifier];
         /**
          * traverse the tree starting at the root node and stop when leap node is reach
-         *      if currentNode.left.value != value || currentNode.right.value
+         *      while currentNode.left.value != value || currentNode.right.value
          *          if value is < value of the current node
          *               move to the left side of current node
          *          else
