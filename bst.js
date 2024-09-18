@@ -65,25 +65,39 @@ class Tree {
 
     delete(value) {
         if (!value) return console.log("Please provide a value when using delete()");
+        if (!this.root.data) return;
+        // if (value == this.root.data && this.height(this.root) == 1) {
+        //     this.root = null;
+        //     return;
+        // }
 
-        if (value == this.root.data && this.height(this.root) == 1) {
-            this.root = null;
-            return;
-        }
+        /**
+         * current implementation works, but the problem is when you are deleting the root node
+         * since the implementation is looking for a parentNode, if the targetNode is the root node.
+         * then the parentNode will be undefine and the whole implementation will not work.
+         * How can you make sure to make the deletion of the root method works with the case 3 without using the parent?
+         *      - create a if statement that will run if the value is = to the root. this will be similar to solution case 3
+         *      - find a way to get the parent of the targetNode
+         */
 
-        let currentNode = this.root;
+        const isRoot = this.root.data == value;
+        let targetNode = this.root;
+        let parentOfTarget;
+        let targetNodeIdentifier;
 
-        while (!!currentNode.left && currentNode.left.data != value && !!currentNode.right && currentNode.right.data != value) {
-            if (value < currentNode.data) {
-                currentNode = currentNode.left;
-            } else {
-                currentNode = currentNode.right;
+        if (!isRoot) {
+            let currentNode = this.root;
+            while (!!currentNode.left && currentNode.left.data != value && !!currentNode.right && currentNode.right.data != value) {
+                if (value < currentNode.data) {
+                    currentNode = currentNode.left;
+                } else {
+                    currentNode = currentNode.right;
+                }
             }
+            parentOfTarget = currentNode;
+            targetNodeIdentifier = parentOfTarget.left.data == value ? "left" : "right";
+            targetNode = parentOfTarget[targetNodeIdentifier];
         }
-
-        const parentOfTarget = currentNode;
-        const targetNodeIdentifier = parentOfTarget.left.data == value ? "left" : "right";
-        const targetNode = parentOfTarget[targetNodeIdentifier];
 
         // it means the node is not yet in the tree
         if (!targetNode) return;
@@ -91,6 +105,7 @@ class Tree {
         // is targetNode is a leap node ??
         if (this.height(targetNode) == 1) {
             parentOfTarget[targetNodeIdentifier] = null;
+            return;
         }
 
         // is targetNode has two children ??
@@ -100,7 +115,6 @@ class Tree {
             let parentOfLeftLeafNode;
 
             // find the smallest value in the right side node of the target node
-            // traverse the tree until you find the left leaf node
             while (currentNode.left) {
                 parentOfLeftLeafNode = currentNode;
                 currentNode = currentNode.left;
@@ -109,25 +123,34 @@ class Tree {
             // "after the loop ended the currentNode will be the left leaf node"
             leftLeafNode = currentNode;
 
-            leftLeafNode.left = targetNode.left;
-            // leftLeafNode.right = targetNode.right;
-
-            // replace the targetNode with the left leaf node
-            parentOfTarget[targetNodeIdentifier] = leftLeafNode;
+            // replace the value of the targetNode with the value of the left leaf node
+            if (isRoot) {
+                this.root.data = leftLeafNode.data;
+            } else {
+                parentOfTarget[targetNodeIdentifier].data = leftLeafNode.data;
+            }
 
             // remove the left leap node
             if (parentOfLeftLeafNode) {
-                parentOfLeftLeafNode.left = leftLeafNode.right;
-                leftLeafNode.right = targetNode.right;
+                parentOfLeftLeafNode.left = null;
+            } else {
+                targetNode.right = null;
             }
+
+            return;
         }
 
         // is targetNode has single child ??
         if ((targetNode.left && !targetNode.right) || (!targetNode.left && targetNode.right)) {
             // locate the single child either it is the left node or the right node
             const targetNodeChildIdentifier = targetNode.left ? "left" : "right";
+
             // once identified, replace the parentOfTarget[targetNodeIdentifier] with the child of the target node
-            parentOfTarget[targetNodeIdentifier] = targetNode[targetNodeChildIdentifier];
+            if (isRoot) {
+                this.root = targetNode[targetNodeChildIdentifier];
+            } else {
+                parentOfTarget[targetNodeIdentifier] = targetNode[targetNodeChildIdentifier];
+            }
         }
 
         /**
