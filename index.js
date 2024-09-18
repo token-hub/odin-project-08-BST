@@ -12,5 +12,14 @@ newTree.insert(6666);
 // prettyPrint(newTree.root);
 // newTree.delete(6345);
 // prettyPrint(newTree.root);
+
+// newTree.delete(6666);
+newTree.delete(9);
+newTree.delete(23);
+newTree.delete(324);
+// prettyPrint(newTree.root);
+newTree.delete(100);
+newTree.delete(6345);
+newTree.delete(6666);
+// console.log(newTree.isBalance());
 prettyPrint(newTree.root);
-console.log(newTree.depth());

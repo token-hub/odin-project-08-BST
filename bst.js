@@ -74,15 +74,18 @@ class Tree {
 
         if (!isRoot) {
             let currentNode = this.root;
-            while (!!currentNode.left && currentNode.left.data != value && !!currentNode.right && currentNode.right.data != value) {
+
+            while (currentNode.left || currentNode.right) {
+                if (currentNode.data == value) break;
+                parentOfTarget = currentNode;
                 if (value < currentNode.data) {
                     currentNode = currentNode.left;
                 } else {
                     currentNode = currentNode.right;
                 }
             }
-            parentOfTarget = currentNode;
-            targetNodeIdentifier = parentOfTarget.left.data == value ? "left" : "right";
+
+            targetNodeIdentifier = parentOfTarget.left && parentOfTarget.left.data == value ? "left" : "right";
             targetNode = parentOfTarget[targetNodeIdentifier];
         }
 
@@ -255,7 +258,7 @@ class Tree {
         return depthCount;
     }
 
-    isBalances() {
+    isBalance() {
         // A balanced tree is one where the difference between heights of the left subtree and the right subtree of every node is not more than 1
         /**
          * const biggest = Math.max(this.height(this.root.left), this.heigh(this.root.right));
@@ -263,6 +266,10 @@ class Tree {
          *
          * return biggest - smallest < 2;
          */
+
+        const biggest = Math.max(this.height(this.root.left), this.height(this.root.right));
+        const smallest = Math.min(this.height(this.root.left), this.height(this.root.right));
+        return biggest - smallest < 2;
     }
 
     rebalance() {
