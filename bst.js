@@ -229,6 +229,20 @@ class Tree {
          *      queue.push(node.left, node.right)
          *
          */
+
+        if (typeof callback !== "function") {
+            throw new Error("A callback is required.");
+        }
+
+        const queue = [this.root];
+
+        while (queue.length) {
+            const node = queue.shift();
+
+            if (!node) continue;
+            callback(node);
+            queue.push(node.left, node.right);
+        }
     }
 
     height(node) {
@@ -288,10 +302,17 @@ class Tree {
     rebalance() {
         // function that rebalances an unbalanced tree. Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
         /**
-         * get all the value and insert it in an array.
+         * get all the values and insert it in an array.
          *
          * then call the buildTree method.
          */
+
+        const newArr = [];
+        this.levelOrder((node) => {
+            newArr.push(node.data);
+        });
+
+        this.root = this.buildArray(newArr);
     }
 }
 
