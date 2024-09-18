@@ -245,6 +245,42 @@ class Tree {
         }
     }
 
+    inOrder(callback, node = this.root) {
+        if (typeof callback !== "function") {
+            throw new Error("A callback is required.");
+        }
+
+        if (!node) return;
+
+        this.inOrder(callback, node.left);
+        callback(node);
+        this.inOrder(callback, node.right);
+    }
+
+    postOrder(callback, node = this.root) {
+        if (typeof callback !== "function") {
+            throw new Error("A callback is required.");
+        }
+
+        if (!node) return;
+
+        this.postOrder(callback, node.left);
+        this.postOrder(callback, node.right);
+        callback(node);
+    }
+
+    preOrder(callback, node = this.root) {
+        if (typeof callback !== "function") {
+            throw new Error("A callback is required.");
+        }
+
+        if (!node) return;
+
+        callback(node);
+        this.preOrder(callback, node.left);
+        this.preOrder(callback, node.right);
+    }
+
     height(node) {
         // function that returns the given node’s height.
         // Height is defined as the number of edges in the longest path from a given node to a leaf node.

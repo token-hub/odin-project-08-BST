@@ -25,4 +25,7 @@ newTree.delete(6666);
 // prettyPrint(newTree.find(8));
 console.log(newTree.isBalance());
 newTree.rebalance();
+newTree.postOrder((node) => {
+    console.log(node.data);
+});
 prettyPrint(newTree.root);
