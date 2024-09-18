@@ -66,19 +66,6 @@ class Tree {
     delete(value) {
         if (!value) return console.log("Please provide a value when using delete()");
         if (!this.root.data) return;
-        // if (value == this.root.data && this.height(this.root) == 1) {
-        //     this.root = null;
-        //     return;
-        // }
-
-        /**
-         * current implementation works, but the problem is when you are deleting the root node
-         * since the implementation is looking for a parentNode, if the targetNode is the root node.
-         * then the parentNode will be undefine and the whole implementation will not work.
-         * How can you make sure to make the deletion of the root method works with the case 3 without using the parent?
-         *      - create a if statement that will run if the value is = to the root. this will be similar to solution case 3
-         *      - find a way to get the parent of the targetNode
-         */
 
         const isRoot = this.root.data == value;
         let targetNode = this.root;
@@ -253,6 +240,19 @@ class Tree {
          * starting from the root. (this.root)
          * count the level until you reach the target node.
          */
+        if (!this.root || !this.node) return 0;
+        let currentNode = this.root;
+        let depthCount = 1;
+
+        while (currentNode.data != node.data) {
+            if (node.data < currentNode.data) {
+                currentNode = currentNode.left;
+            } else {
+                currentNode = currentNode.right;
+            }
+            depthCount++;
+        }
+        return depthCount;
     }
 
     isBalances() {
