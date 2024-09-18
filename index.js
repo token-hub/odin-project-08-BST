@@ -21,5 +21,7 @@ newTree.delete(324);
 newTree.delete(100);
 newTree.delete(6345);
 newTree.delete(6666);
+// console.log(newTree.find(7));
+// prettyPrint(newTree.find(8));
 // console.log(newTree.isBalance());
 prettyPrint(newTree.root);

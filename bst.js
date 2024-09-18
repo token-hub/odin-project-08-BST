@@ -200,6 +200,19 @@ class Tree {
          *          else
          *              move to the right of the current node
          */
+
+        let currentNode = this.root;
+
+        while (currentNode.left || currentNode.right) {
+            if (currentNode.data == value) return currentNode;
+            if (value < currentNode.data) {
+                currentNode = currentNode.left;
+            } else {
+                currentNode = currentNode.right;
+            }
+        }
+
+        return null;
     }
 
     levelOrder(callback) {
